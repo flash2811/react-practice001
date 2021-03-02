@@ -7,6 +7,8 @@ const person = (props) => {
         <div>
             <p onClick={props.click}> I'm {props.name} and I am {props.age} years old!</p>
             <p>{props.children}</p>
+            {/* having value without onchange would make the names be static and can't be changed */}
+            <input type = "text" onChange = {props.changed} value={props.name}/>
         </div>    
     )
 }
