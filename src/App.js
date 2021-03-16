@@ -45,6 +45,15 @@ class App extends Component {
   }
 
   render() {
+    // inline style 
+    const style = {
+      backgroundColor: 'white',
+      font: 'inherit',
+      border: '1x solid blue',
+      padding: '8px',
+      cursor: 'pinter'
+    }
+
     return (
       <div className="App">
         <h1>Hi, I'm a Sunny App</h1>
@@ -52,7 +61,9 @@ class App extends Component {
         <p>Another para</p>
 
         {/* this could be inefficient */}
-        <button onClick={() => this.switchNameHandler('Subhrajyoti')}>Switch Name</button>
+        <button 
+        style={style}
+        onClick={() => this.switchNameHandler('Subhrajyoti')}>Switch Name</button>
 
         <Person
           name={this.state.persons[0].name}
