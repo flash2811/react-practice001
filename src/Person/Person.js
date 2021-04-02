@@ -1,7 +1,9 @@
 import React from 'react';
+import Radium from 'radium';
 // no need for component since class is not being used
 
 import './Person.css';
+//have to manually add the css file used 
 
 
 const person = (props) => {
@@ -17,4 +19,4 @@ const person = (props) => {
 
 
 
-export default person;
+export default Radium(person);

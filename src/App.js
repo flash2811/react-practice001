@@ -1,7 +1,9 @@
 import React, { Component, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Radium from 'radium';
 import Person from './Person/Person'
+import person from './Person/Person';
 
 
 //const app = props => {
@@ -37,14 +39,21 @@ class App extends Component {
   //   })
   // }
 
-  nameChangedHandler = (event) => {
-    this.setState({
-      persons: [
-        { name: "Subhra", age: 22 },
-        { name: event.target.value, age: 53 },
-        { name: 'Byleth', age: 26 }
-      ]
-    })
+  nameChangedHandler = (event, id) => {
+    const personIndex = this.state.persons.findIndex(p => {
+      return p.id === id;
+    });
+
+    const person = {
+      ...this.state.persons[personIndex]
+    };
+
+    person.name = event.target.value;
+
+    const persons = [...this.state.persons];
+    persons[personIndex] = person;
+
+    this.setState( {persons: persons})
   }
 
   deletePersonHandler = (personIndex) => {
@@ -63,12 +72,17 @@ class App extends Component {
   render() {
     // inline style 
     const style = {
-      backgroundColor: 'white',
+      backgroundColor: 'green',
+      color: 'white',
       font: 'inherit',
       border: '1x solid blue',
       padding: '8px',
-      cursor: 'pinter'
-    }
+      cursor: 'pinter',
+      ':hover': {
+        backgroundColor: 'lightgreen',
+        color: 'black'
+      }
+    };
 
 
     // this is the prefered way
@@ -83,8 +97,10 @@ class App extends Component {
               click = {() => this.deletePersonHandler(index)}
               name = {person.name} 
               age ={person.age}
-              key = {person.id} />
+              key = {person.id}
+              changed={(event) => this.nameChangedHandler(event, person.id)} />
           })}
+
           {/* <Person
             name={this.state.persons[0].name}
             age={this.state.persons[0].age} />
@@ -98,14 +114,27 @@ class App extends Component {
             age={this.state.persons[2].age} /> */}
         </div>
       );
+      style.backgroundColor = 'red';
+      style[':hover'] = {
+        backgroundColor: 'lightred',
+        color: 'black'
+      }
     }
-    
+
+    const classes = [];
+    if (this.state.persons.length <= 2) {
+      classes.push('red');
+    }
+    if (this.state.persons.length <= 1) {
+      classes.push('bold');
+    }
+
 
     return (
       <div className="App">
         <h1>Hi, I'm a Sunny App</h1>
         <h2>10 + 20 = {this.add(10, 20)}</h2>
-        <p>Another para</p>
+        <p className = {classes.join(' ')} >Another para</p>
 
         {/* this could be inefficient */}
         <button 
@@ -132,4 +161,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default Radium(App);
